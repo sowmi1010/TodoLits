@@ -6,9 +6,16 @@
         <div class="flex gap-2">
           <input
             type="text"
-            name="value"
+            name="user"
             class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-4 text-sm text-gray-900 focus:border-orange-500 focus:ring-orange-500"
-            placeholder="Add Your List"
+            placeholder="Team Member"
+            required
+          />
+          <input
+            type="text"
+            name="work"
+            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-4 text-sm text-gray-900 focus:border-orange-500 focus:ring-orange-500"
+            placeholder="Task Description"
             required
           />
 
@@ -29,7 +36,9 @@
               type="checkbox"
               class="w-5 h-5 text-orange-600 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 focus:ring-2"
             />
-            <p class="ml-2 inline-block text-gray-600"><%= item.text %></p>
+            <p class="ml-2 inline-block text-gray-600">
+              <%= item.user %> - <%= item.work %>
+            </p>
           </div>
 
           <div class="absolute right-0 mr-2">
