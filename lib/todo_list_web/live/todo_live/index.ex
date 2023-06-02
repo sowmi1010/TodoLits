@@ -11,23 +11,25 @@ defmodule TodoListWeb.TodoLive.Index do
     {:noreply, assign(socket, items: updated_items)}
   end
 
-  def handle_event("toggle_complete", %{"index" => index}, socket) do
-    updated_items =
-      Enum.map(socket.assigns.items, fn %{completed: completed} = item, i ->
-        if String.to_integer(index) == i do
-          %{item | completed: !completed}
-        else
-          item
-        end
-      end)
-
-    {:noreply, assign(socket, items: updated_items)}
-  end
-
   def handle_event("delete_item", %{"index" => index}, socket) do
     updated_items =
       socket.assigns.items
       |> List.delete_at(String.to_integer(index))
+
+    {:noreply, assign(socket, items: updated_items)}
+  end
+
+  def handle_event(
+        "reposition",
+        %{"old" => old_index, "new" => new_index, "index" => _item_index},
+        socket
+      ) do
+    updated_items =
+      socket.assigns.items
+      |> List.insert(
+        new_index,
+        List.delete_at(socket.assigns.items, String.to_integer(old_index))
+      )
 
     {:noreply, assign(socket, items: updated_items)}
   end
