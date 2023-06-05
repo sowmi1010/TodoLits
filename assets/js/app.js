@@ -5,20 +5,29 @@ import topbar from "../vendor/topbar";
 import Sortable from "../vendor/sortable";
 
 let Hooks = {};
+
 Hooks.Sortable = {
   mounted() {
+    let group = this.el.dataset.group;
     let sorter = new Sortable(this.el, {
+      group: group ? { name: group, pull: true, put: true } : undefined,
       animation: 150,
-      delay: 100,
+      // delay: 100,
       dragClass: "drag-item",
       ghostClass: "drag-ghost",
-      forceFallback: true,
+      // forceFallback: true,
       onEnd: (e) => {
-        let oldIndex = e.oldIndex;
-        let newIndex = e.newIndex;
-        let itemIndex = e.item.dataset.index;
-        let params = { old: oldIndex, new: newIndex, index: itemIndex };
-        this.pushEventTo(this.el, "reposition", params);
+        let params = {
+          old: e.oldIndex,
+          new: e.newIndex,
+          to: e.to.dataset,
+          ...e.item.dataset,
+        };
+        this.pushEventTo(
+          this.el,
+          this.el.dataset["drop"] || "reposition",
+          params
+        );
       },
     });
   },

@@ -28,29 +28,25 @@
         </div>
       </form>
     </div>
-    <ul
-      id="sortable-list"
-      class="overflow-y-auto lg:h-[42rem] h-full bg-orange-50 journal-scroll"
-      phx-hook="Sortable"
-    >
-      <li
-        :for={{item, index} <- Enum.with_index(@items)}
+
+    <div id="sortable-list" phx-hook="Sortable"
+      class="overflow-y-auto lg:h-[42rem] h-full bg-orange-50 journal-scroll">
+      <div :for={{item, index} <- Enum.with_index(@items)}
         id={"sortable-item-#{index}"}
         data-index={index}
-        class="relative flex items-center justify-between border-2 bg-white py-2 px-3 mt-3 rounded-xl border-orange-600 shadow-2xl drag-item:focus-within:ring-0 drag-item:focus-within:ring-offset-0 drag-ghost:bg-zinc-300 drag-ghost:border-0 drag-ghost:ring-0"
-      >
-        <p class="ml-2 inline-block text-gray-600 drag-ghost:opacity-0">
-          <%= item.user %> - <%= item.work %>
-        </p>
-        <button
-          class="absolute right-0 mr-2"
-          type="button"
-          phx-click="delete_item"
-          phx-value-index={index}
-        >
-          <.icon name="hero-x-mark-mini" class="h-6 w-6 text-orange-600 font-serif font-semibold" />
-        </button>
-      </li>
-    </ul>
+        class="relative flex items-center justify-between border-2 bg-white py-2 px-3 mt-3 rounded-xl border-orange-600 shadow-2xl drag-item:focus-within:ring-0 drag-item:focus-within:ring-offset-0 drag-ghost:bg-orange-300 drag-ghost:border-0 drag-ghost:ring-0">
+          <p class="ml-2 inline-block text-gray-600 drag-ghost:opacity-0 font-bold">
+            <%= item.user %> - <span class="font-medium"><%= item.work %></span>
+          </p>
+          <button
+           class="absolute right-0 mr-2"
+           type="button"
+           phx-click="delete_item"
+           phx-value-index={index}>
+           <.icon name="hero-x-mark-mini" class="h-6 w-6 text-orange-600 font-serif font-semibold" />
+         </button>
+      </div>
+    </div>
+
   </div>
 </div>

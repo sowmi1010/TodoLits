@@ -26,11 +26,14 @@ defmodule TodoListWeb.TodoLive.Index do
       ) do
     updated_items =
       socket.assigns.items
-      |> List.insert(
-        new_index,
-        List.delete_at(socket.assigns.items, String.to_integer(old_index))
-      )
+      |> List.delete_at(String.to_integer(to_string(old_index)))
+      |> List.insert_at(String.to_integer(to_string(new_index)), new_item(socket))
 
     {:noreply, assign(socket, items: updated_items)}
+  end
+
+  defp new_item(socket) do
+    [%{user: user, work: work, completed: false} | _] = socket.assigns.items
+    %{user: user, work: work, completed: false}
   end
 end
